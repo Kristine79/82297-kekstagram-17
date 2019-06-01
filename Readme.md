@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Кристина Лобзова](https://up.htmlacademy.ru/javascript/17/user/82297).
-* Наставник: `Неизвестно`.
+* Наставник: [Арсений Ильяшов](https://htmlacademy.ru/profile/id40943).
 
 ---
 
