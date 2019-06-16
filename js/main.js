@@ -13,6 +13,7 @@ var photosQuantity = 25;
 
 var photos = [];
 
+
 function randomInteger(min, max) {
   var rand = min + Math.random() * (max + 1 - min);
   rand = Math.floor(rand);
@@ -21,14 +22,16 @@ function randomInteger(min, max) {
 
 var makeComments = function () {
   var comments = [];
-  comments[i] = {
-    avatar: randomInteger(avatar),
-    comment: randomInteger(commentsText),
-    name: randomInteger(authors),
-  };
-
+  for (var z = 0; z < randomInteger(1, 20); z++) {
+    comments[z] = {
+      avatar: randomInteger(avatar),
+      comment: randomInteger(commentsText),
+      name: randomInteger(authors)
+    };
+  }
   return comments;
 };
+
 
 for (var i = 1; i <= photosQuantity; i++) {
   var urlData = 'photos/' + i + '.jpg';
