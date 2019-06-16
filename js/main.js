@@ -1,3 +1,4 @@
+
 'use strict';
 
 var commentsText = ['Всё отлично!', 'В целом всё неплохо. Но не всё.', 'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -19,7 +20,8 @@ function randomInteger(min, max) {
 }
 
 var makeComments = function () {
-  var comments = {
+  var comments = [];
+  comments[i] = {
     avatar: randomInteger(avatar),
     comment: randomInteger(commentsText),
     name: randomInteger(authors),
@@ -32,8 +34,8 @@ for (var i = 1; i <= photosQuantity; i++) {
   var urlData = 'photos/' + i + '.jpg';
   photos.push({
     url: urlData,
-    ikes: randomInteger(15, 200),
-    comments: makeComments()
+    likes: randomInteger(15, 200),
+    comments: makeComments().length
   });
 }
 
@@ -53,8 +55,8 @@ var renderPhotos = function (photo) {
 
 var fragment = document.createDocumentFragment();
 
-for (var i = 0; i < photos.length; i++) {
-  fragment.appendChild(renderPhotos(photos[i]));
+for (var element = 0; element < photos.length; element++) {
+  fragment.appendChild(renderPhotos(photos[element]));
 }
 
 pictureElement.appendChild(fragment);
