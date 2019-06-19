@@ -131,7 +131,7 @@ elementScaleSmaller.addEventListener('click', function () {
     imageZoomOutHandler();
   }
 });
-elementScaleSmaller.addEventListener('keydown', function (evt) {
+elementScaleSmaller.addEventListener('keydown', function () {
   if (currentScaleValue > minScale) {
     imageZoomOutHandler();
   }
@@ -141,7 +141,7 @@ elementScaleBigger.addEventListener('click', function () {
     imageZoomInHandler();
   }
 });
-elementScaleBigger.addEventListener('keydown', function (evt) {
+elementScaleBigger.addEventListener('keydown', function () {
   if (currentScaleValue < minScale) {
     imageZoomInHandler();
   }
