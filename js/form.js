@@ -104,3 +104,37 @@ var addFilterHandler = function (photo, filter) {
 for (var x = 0; x < photosEffectsList.length; x++) {
   addFilterHandler(photosEffectsList[x], filters[x]);
 }
+
+
+// Валидация формы - поле с комментарием
+
+var commentField = document.querySelector('.text__description');
+
+var pressEscButton = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    сloseButtonImageUpload();
+  }
+};
+
+commentField.addEventListener('focus', function () {
+  document.removeEventListener('keydown', pressEscButton);
+});
+
+commentField.addEventListener('blur', function () {
+  document.addEventListener('keydown', pressEscButton);
+});
+
+
+commentField.addEventListener('invalid', function () {
+  if (commentField.validity.tooShort) {
+    commentField.setCustomValidity('Комментарий должен состоять минимум из 2-х символов');
+    commentField.style.boxShadow = '0 0 0 2px red';
+  } else if (commentField.validity.tooLong) {
+    commentField.setCustomValidity('Комментарий не должен превышать 140 символов');
+  } else if (commentField.validity.valueMissing) {
+    commentField.setCustomValidity('Обязательное поле');
+    commentField.style.boxShadow = '0 0 0 2px red';
+  } else {
+    commentField.setCustomValidity('');
+  }
+});
