@@ -8,7 +8,18 @@ var imageUpload = document.querySelector('.img-upload__overlay');
 var сloseButtonImageUpload = imageUpload.querySelector('.img-upload__cancel');
 var imagePreview = imageUpload.querySelector('.img-upload__preview img');
 var photosEffectsList = imageUpload.querySelectorAll('.effects__item');
-var effectLevel = imageUpload.querySelector('.effect-level');
+var imgUploadOverlayElement = document.querySelector('.img-upload__overlay');
+var effectLevel = imgUploadOverlayElement.querySelector('.effect-level');
+var elementScaleSmaller = document.querySelector('.scale__control--smaller');
+var elementScaleBigger = document.querySelector('.scale__control--bigger');
+var elementScaleValue = document.querySelector('.scale__control--value');
+var minScale = 25;
+var maxScale = 100;
+var scaleStep = 25;
+var defaultFilterValue = 100;
+var currentScaleValue = defaultFilterValue;
+var elementImagePreviewWrap = document.querySelector('.img-upload__preview');
+
 
 var filters = [
   'effects__preview--none',
@@ -20,36 +31,20 @@ var filters = [
 ];
 
 
-uploadFile.addEventListener('change', function () {
-  imageUpload.classList.remove('hidden');
-  document.addEventListener('keydown', onPopupEscClose);
-  elementScaleValue.value = '100%';
-});
+// uploadFile.addEventListener('change', function () {
+// imageUpload.classList.remove('hidden');
+// document.addEventListener('keydown', onPopupEscClose);
+// elementScaleValue.value = '100%';
+// });
 
 
-var closeImageUpload = function () {
-  imageUpload.classList.add('hidden');
-  document.removeEventListener('keydown', onPopupEscClose);
-};
+// var onPopupEscClose = function (evt) {
+//  if (evt.keyCode === ESC_KEYCODE) {
+// closeImageUpload();
+// }
+// };
 
-сloseButtonImageUpload.addEventListener('click', closeImageUpload);
-
-
-var onPopupEscClose = function (evt) {
-  if (evt.keyCode === ESC_KEYCODE) {
-    closeImageUpload();
-  }
-};
-
-var elementScaleSmaller = document.querySelector('.scale__control--smaller');
-var elementScaleBigger = document.querySelector('.scale__control--bigger');
-var elementScaleValue = document.querySelector('.scale__control--value');
-var minScale = 25;
-var maxScale = 100;
-var scaleStep = 25;
-var defaultFilterValue = 100;
-var currentScaleValue = defaultFilterValue;
-var elementImagePreviewWrap = document.querySelector('.img-upload__preview');
+// Изменение масштаба изображения
 
 var imageZoomOutHandler = function () {
   currentScaleValue -= scaleStep;
@@ -83,6 +78,7 @@ elementScaleBigger.addEventListener('keydown', function () {
   }
 });
 
+// Смена эффектов
 
 var setImagePreviewScale = function (value) {
   elementScaleValue.value = value + '%';
@@ -104,3 +100,39 @@ var addFilterHandler = function (photo, filter) {
 for (var x = 0; x < photosEffectsList.length; x++) {
   addFilterHandler(photosEffectsList[x], filters[x]);
 }
+
+
+// Валидация формы - поле с комментарием
+
+var commentField = document.querySelector('.text__description');
+
+var pressEscButton = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    if (commentField === document.activeElement) {
+      return evt;
+    } else {
+      closePopup();
+    }
+  }
+  return evt;
+};
+
+
+var openPopup = function () {
+  imageUpload.classList.remove('hidden');
+  document.addEventListener('keydown', pressEscButton);
+  elementScaleValue.value = '100%';
+};
+
+var closePopup = function () {
+  imageUpload.classList.add('hidden');
+  document.removeEventListener('keydown', pressEscButton);
+};
+
+uploadFile.addEventListener('click', function () {
+  openPopup();
+});
+
+сloseButtonImageUpload.addEventListener('click', function () {
+  closePopup();
+});
