@@ -1,4 +1,6 @@
 
+(function () {
+
 'use strict';
 
 var commentsText = ['Всё отлично!', 'В целом всё неплохо. Но не всё.', 'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -12,6 +14,8 @@ var avatar = ['../img/avatar-1.svg', '../img/avatar-2.svg', '../img/avatar-3.svg
 var photosQuantity = 25;
 
 var photos = [];
+
+var URL = 'https://js.dump.academy/kekstagram/data';
 
 
 function randomInteger(min, max) {
@@ -55,7 +59,7 @@ var renderPhotos = function (photo) {
   return photoElement;
 };
 
-
+var insertPhoto = function (photos) {
 var fragment = document.createDocumentFragment();
 
 for (var element = 0; element < photos.length; element++) {
@@ -63,3 +67,8 @@ for (var element = 0; element < photos.length; element++) {
 }
 
 pictureElement.appendChild(fragment);
+ };
+
+ window.load(insertPhoto);
+
+})();
