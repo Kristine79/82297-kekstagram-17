@@ -1,7 +1,6 @@
+'use strict';
 
 (function () {
-
-'use strict';
 
 var commentsText = ['Всё отлично!', 'В целом всё неплохо. Но не всё.', 'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
   'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.', 'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
@@ -17,6 +16,7 @@ var photos = [];
 
 var URL = 'https://js.dump.academy/kekstagram/data';
 
+var buttonsFormElement = document.querySelector('.img-filters__form');
 
 function randomInteger(min, max) {
   var rand = min + Math.random() * (max + 1 - min);
@@ -69,6 +69,70 @@ for (var element = 0; element < photos.length; element++) {
 pictureElement.appendChild(fragment);
  };
 
- window.load(insertPhoto);
+ //window.load(insertPhoto);
+
+// Фильтры
+
+  var onLoadError = function (errorMessage) {
+    var node = document.createElement('div');
+    node.classList.add('error-message');
+    node.textContent = errorMessage;
+    document.body.insertAdjacentElement('afterbegin', node);
+  };
+
+  var updateButtonsClass = function (activeButton) {
+    var buttonElements = buttonsFormElement.querySelectorAll('.img-filters__button');
+
+    buttonElements.forEach(function (buttonEl) {
+      buttonEl.classList.remove('img-filters__button--active');
+    });
+
+    activeButton.classList.add('img-filters__button--active');
+  };
+
+  var updatePhotosList = function (filteredPictures) {
+    clearPhotosList();
+    insertPhoto(filteredPictures);
+  };
+
+  var debounceUpdatePhotosList = window.debounce(updatePhotosList);
+
+  var onFilterButtonClick = function (evt) {
+    var isTypeButton = evt.target.type === 'button';
+    var isActiveButton = evt.target.classList.contains('img-filters__button--active');
+    var ButtonIdToFIlterName = {
+      'filter-popular': 'filterPopular',
+      'filter-new': 'filterNew',
+      'filter-discussed': 'filterComments'
+    };
+
+    if (!isTypeButton || isActiveButton) {
+      return;
+    }
+
+    updateButtonsClass(evt.target);
+    var filterFunctionName = ButtonIdToFIlterName[evt.target.id];
+    var filteredPictures = window.filters[filterFunctionName](photos);
+
+    debounceUpdatePhotosList(filteredPictures);
+  };
+
+  var onLoadSuccess = function (data) {
+    photos = data;
+    insertPhoto(data);
+    document.querySelector('.img-filters').classList.remove('img-filters--inactive');
+
+    buttonsFormElement.addEventListener('click', onFilterButtonClick);
+    pictureElement.addEventListener('click', onPicturesClick);
+  };
+
+  var clearPhotosList = function () {
+    var pictures = document.querySelectorAll('.picture');
+    pictures.forEach(function (el) {
+      el.remove();
+    });
+  };
+
+  window.load.load(onLoadSuccess, onLoadError);
 
 })();
