@@ -2,6 +2,7 @@
 (function () {
 
   // Фильтр новых фото
+
   var filterNew = function (data) {
     var countNewPhotos = 10;
     var newPhotos = data.slice();
