@@ -4,23 +4,16 @@
 
 (function () {
 
-  //var ESC_KEYCODE = 27;
-  // var imageUploadOverlay = document.querySelector('.img-upload__overlay');
-// var imageUpload = document.querySelector('.img-upload__overlay');
-  //var сloseButtonImageUpload = window.imageUploadOverlay.querySelector('.img-upload__cancel');
+var MIN_SCALE = 25;
+var MAX_SCALE = 100;
+var SCALE_STEP = 25;
+var DEFAULT_FILTER_VALUE = 100;
 var imagePreview = window.imageUploadOverlay.querySelector('.img-upload__preview img');
 var photosEffectsList = window.imageUploadOverlay.querySelectorAll('.effects__item');
-  // var effectLevel = imageUploadOverlay.querySelector('.effect-level');
 var elementScaleSmaller = document.querySelector('.scale__control--smaller');
 var elementScaleBigger = document.querySelector('.scale__control--bigger');
-  //var elementScaleValue = document.querySelector('.scale__control--value');
-var minScale = 25;
-var maxScale = 100;
-var scaleStep = 25;
-var defaultFilterValue = 100;
-var currentScaleValue = defaultFilterValue;
+var currentScaleValue = DEFAULT_FILTER_VALUE;
 var elementImagePreviewWrap = document.querySelector('.img-upload__preview');
-
 
 var filters = [
   'effects__preview--none',
@@ -31,50 +24,35 @@ var filters = [
   'effects__preview--heat'
 ];
 
-
-// uploadFile.addEventListener('change', function () {
-// imageUpload.classList.remove('hidden');
-// document.addEventListener('keydown', onPopupEscClose);
-// elementScaleValue.value = '100%';
-// });
-
-
-// var onPopupEscClose = function (evt) {
-//  if (evt.keyCode === ESC_KEYCODE) {
-// closeImageUpload();
-// }
-// };
-
 // Изменение масштаба изображения
 
 var imageZoomOutHandler = function () {
-  currentScaleValue -= scaleStep;
+  currentScaleValue -= SCALE_STEP;
   setImagePreviewScale(currentScaleValue);
 };
 
 var imageZoomInHandler = function () {
-  currentScaleValue += scaleStep;
+  currentScaleValue += SCALE_STEP;
   setImagePreviewScale(currentScaleValue);
 };
 
-
 elementScaleSmaller.addEventListener('click', function () {
-  if (currentScaleValue > minScale) {
+  if (currentScaleValue > MIN_SCALE) {
     imageZoomOutHandler();
   }
 });
 elementScaleSmaller.addEventListener('keydown', function () {
-  if (currentScaleValue > minScale) {
+  if (currentScaleValue > MIN_SCALE) {
     imageZoomOutHandler();
   }
 });
 elementScaleBigger.addEventListener('click', function () {
-  if (currentScaleValue < maxScale) {
+  if (currentScaleValue < MAX_SCALE) {
     imageZoomInHandler();
   }
 });
 elementScaleBigger.addEventListener('keydown', function () {
-  if (currentScaleValue < minScale) {
+  if (currentScaleValue < MIN_SCALE) {
     imageZoomInHandler();
   }
 });

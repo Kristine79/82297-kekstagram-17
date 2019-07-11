@@ -5,6 +5,7 @@
 (function () {
 
 var ESC_KEYCODE = 27;
+window.ESC_KEYCODE = ESC_KEYCODE;
 
 window.imgUploadOverlayElement = document.querySelector('.img-upload__overlay');
 
