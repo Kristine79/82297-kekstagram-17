@@ -2,13 +2,13 @@
 
 (function () {
 
-// Валидация формы - поле с комментарием
+// Валидация формы - поля с комментарием и хеш-тегом
 
 var commentField = document.querySelector('.text__description');
 
 var pressEscButton = function (evt) {
   if (evt.keyCode === window.ESC_KEYCODE) {
-    if (commentField === document.activeElement) {
+    if (commentField === document.activeElement || window.hashtags === document.activeElement) {
       return evt;
     } else {
       closePopup();
@@ -31,7 +31,7 @@ var closePopup = function () {
   document.removeEventListener('keydown', pressEscButton);
 };
 
-window.uploadFile.addEventListener('click', function () {
+window.uploadFile.addEventListener('change', function () {
   openPopup();
 });
 
