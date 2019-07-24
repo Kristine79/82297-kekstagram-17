@@ -16,7 +16,7 @@ var photos = [];
 
 var URL = 'https://js.dump.academy/kekstagram/data';
 
-var buttonsFormElement = document.querySelector('.img-filters__form');
+var buttonsForm = document.querySelector('.img-filters__form');
 
 function randomInteger(min, max) {
   var rand = min + Math.random() * (max + 1 - min);
@@ -46,17 +46,17 @@ for (var i = 1; i <= PHOTOS_QUANTITY; i++) {
   });
 }
 
-var pictureElement = document.querySelector('.pictures');
+var pictures = document.querySelector('.pictures');
 var pictureTemplate = document.querySelector('#picture').content;
 
 var renderPhotos = function (photo) {
-  var photoElement = pictureTemplate.cloneNode(true);
+  var pic = pictureTemplate.cloneNode(true);
 
-  photoElement.querySelector('.picture__img').src = photo.url;
-  photoElement.querySelector('.picture__likes').textContent = photo.likes;
-  photoElement.querySelector('.picture__comments').textContent = photo.comments.length;
+  pic.querySelector('.picture__img').src = photo.url;
+  pic.querySelector('.picture__likes').textContent = photo.likes;
+  pic.querySelector('.picture__comments').textContent = photo.comments.length;
 
-  return photoElement;
+  return pic;
 };
 
 var insertPhoto = function (photos) {
@@ -66,7 +66,7 @@ for (var element = 0; element < photos.length; element++) {
   fragment.appendChild(renderPhotos(photos[element]));
 }
 
-pictureElement.appendChild(fragment);
+pictures.appendChild(fragment);
  };
 
 // Фильтры
@@ -79,7 +79,7 @@ pictureElement.appendChild(fragment);
   };
 
   var updateButtonsClass = function (activeButton) {
-    var buttonElements = buttonsFormElement.querySelectorAll('.img-filters__button');
+    var buttonElements = buttonsForm.querySelectorAll('.img-filters__button');
 
     buttonElements.forEach(function (buttonEl) {
       buttonEl.classList.remove('img-filters__button--active');
@@ -120,8 +120,8 @@ pictureElement.appendChild(fragment);
     insertPhoto(data);
     document.querySelector('.img-filters').classList.remove('img-filters--inactive');
 
-    buttonsFormElement.addEventListener('click', onFilterButtonClick);
-    pictureElement.addEventListener('click', onPicturesClick);
+    buttonsForm.addEventListener('click', onFilterButtonClick);
+    pictures.addEventListener('click', onPicturesClick);
   };
 
   var clearPhotosList = function () {
@@ -141,13 +141,13 @@ pictureElement.appendChild(fragment);
 
   var onPicturesClick = function (evt) {
     var target = evt.target;
-    var pictureElement = target.closest('.picture');
+    var pictures = target.closest('.picture');
 
-    if (!pictureElement) {
+    if (!pictures) {
       return;
     }
 
-    var imageElement = pictureElement.querySelector('.picture__img');
+    var imageElement = pictures.querySelector('.picture__img');
     var imageSrc = imageElement.getAttribute('src');
     var imageData = getImageData(imageSrc);
 

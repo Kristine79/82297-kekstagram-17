@@ -5,6 +5,7 @@
 // Валидация формы - поля с комментарием и хеш-тегом
 
 var commentField = document.querySelector('.text__description');
+window.commentField = commentField;
 
 var pressEscButton = function (evt) {
   if (evt.keyCode === window.ESC_KEYCODE) {
@@ -18,7 +19,7 @@ var pressEscButton = function (evt) {
 };
 
 
-// Открытие и закрытие формы
+  // Открытие и закрытие формы
 
 var openPopup = function () {
   imageUploadOverlay.classList.remove('hidden');
@@ -30,14 +31,15 @@ var closePopup = function () {
   imageUploadOverlay.classList.add('hidden');
   document.removeEventListener('keydown', pressEscButton);
 };
+window.closePopup = closePopup;
 
 window.uploadFile.addEventListener('change', function () {
   openPopup();
 });
 
-сloseButtonImageUpload.addEventListener('click', function () {
-  closePopup();
-});
+uploadCancel.addEventListener('click', function () {
+    closePopup();
+  });
 
 })();
 

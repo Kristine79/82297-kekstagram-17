@@ -7,6 +7,7 @@
   var hashtags = document.querySelector('.text__hashtags');
   window.hashtags = hashtags;
   var imageUploadForm = document.querySelector('.img-upload__form');
+  window.imageUploadForm = imageUploadForm;
 
   var hashtagsValidate = function () {
     var hashtagsArray = hashtags.value.split(' ');

@@ -15,6 +15,8 @@ window.imageUploadOverlay = document.querySelector('.img-upload__overlay');
 
 window.uploadFile = document.querySelector('#upload-file');
 
+window.uploadCancel = document.querySelector('#upload-cancel');
+
 window.сloseButtonImageUpload = window.imageUploadOverlay.querySelector('.img-upload__cancel');
 
 window.elementScaleValue = document.querySelector('.scale__control--value');
