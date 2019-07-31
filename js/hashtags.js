@@ -4,76 +4,62 @@
   var MAX_HASHTAGS_LENGTH = 5;
   var MAX_HASHTAG_SIZE = 20;
   var MIN_HASHTAG_SIZE = 2;
-  var hashtags = document.querySelector('.text__hashtags');
-  window.hashtags = hashtags;
-  var imageUploadForm = document.querySelector('.img-upload__form');
-  window.imageUploadForm = imageUploadForm;
+  var hashtagsInput = document.querySelector('.text__hashtags');
+  window.hashtagsInput = hashtagsInput;
+  var imgUploadForm = document.querySelector('.img-upload__form');
+  window.imgUploadForm = imgUploadForm;
 
-  var hashtagsValidate = function () {
-    var hashtagsArray = hashtags.value.split(' ');
-    hashtags.addEventListener('input', function () {
-      hashtags.setCustomValidity('');
+  var hashtagsValidate = function (hashtagsInputValue) {
+    var hashtags = hashtagsInputValue.split(' ');
+
+    hashtagsInput.addEventListener('input', function () {
+      hashtagsInput.setCustomValidity('');
+      hashtagsInput.style.outline = 'none';
     });
 
-    if (hashtagsArray.length > MAX_HASHTAGS_LENGTH) {
-      onHashtagsError();
-      return 'Нельзя указать больше' + MAX_HASHTAGS_LENGTH + ' тегов';
+    if (hashtags.length > MAX_HASHTAGS_LENGTH) {
+      return 'Нельзя внести больше ' + MAX_HASHTAGS_LENGTH + ' тегов';
     }
 
-    var isRepeatHashtag = hashtagsArray.some(function (item, i, arr) {
-      return ~arr.indexOf(item, i + 1);
-    });
+    for (var i = 0; i < hashtags.length; i++) {
+      if (hashtags[i] === '#') {
+        return 'Хэштег не может состоять из одной решетки';
 
-    if (isRepeatHashtag) {
-       onHashtagsError();
-       return 'Один и тот же хэш-тег не может быть использован дважды'
-    }
+      } else if (hashtags[i].length === MIN_HASHTAG_SIZE) {
+        return 'Хэштег не может состоять из одной буквы';
 
-    var isSplitSpaceHashtag = hashtagsArray.some(function (item) {
-      return ~item.indexOf('#', 1);
-    });
+      } else if (hashtags[i].charAt(0) !== '#') {
+        return 'Хэштег должен начинаться с символа #';
 
-    if (isSplitSpaceHashtag) {
-      onHashtagsError();
-      return 'Хэш-теги разделяются пробелами';
-    }
+      } else if (hashtags[i].length > MAX_HASHTAG_SIZE) {
+        return 'Хэштег не может содержать больше ' + MAX_HASHTAG_SIZE + ' символов';
 
-    for (var i = 0; i < hashtagsArray.length; i++) {
+      } else if (hashtags.indexOf(hashtags[i]) !== i) {
+        return 'Один и тот же хэш-тег не может быть использован дважды';
 
-      if (hashtagsArray[i] === '#') {
-        onHashtagsError();
-        return 'Хеш-тег не может состоять только из одной решётки';
+      } else if (hashtags.length > 5) {
+        return 'Нельзя указать больше пяти хэш-тегов';
 
-      } else if (hashtagsArray[i].length === MIN_HASHTAG_SIZE) {
-        onHashtagsError();
-        return 'Хэш-тег не может состоять из одной буквы';
-
-      } else if (hashtagsArray[i].charAt(0) !== '#') {
-        onHashtagsError();
-        return 'Хэш-тег должен начинаться с символа #';
-
-      } else if (hashtagsArray[i].length > MAX_HASHTAG_SIZE) {
-        onHashtagsError();
-        return 'Максимальная длина одного хэш-тега' + MAX_HASHTAG_SIZE + ' символов, включая решетку';
+      } else if (hashtags[i].indexOf('#', 1) >= 1) {
+        return 'Хэш-теги разделяются пробелами';
       }
     }
-    return '';
-  };
-
-  var hashtagsError = function (errorMessage, entryField) {
-    if (errorMessage) {
-      entryField.style.outline = '4px solid red';
-      entryField.setCustomValidity(errorMessage);     }
+    return false;
   };
 
   var submitValidate = function () {
-    hashtagsError(hashtagsValidate(), hashtags);
+    var hashtagsInputValue = hashtagsInput.value;
+    if (hashtagsInputValue === '') {
+      return false;
+    }
+    var errorMessage = hashtagsValidate(hashtagsInputValue);
+    if (errorMessage) {
+      hashtagsInput.style.outline = '4px solid red';
+      hashtagsInput.setCustomValidity(errorMessage);
+      return true;
+    }
+    return false;
   };
 
-  var onHashtagsError = function () {
-    event.preventDefault();
-  };
-
-  imageUploadForm.addEventListener('submit', submitValidate);
-
+  window.submitValidate = submitValidate;
 })();

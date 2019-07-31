@@ -1,13 +1,15 @@
 'use strict';
 
 (function () {
-  var FILE_TYPES = ['jpg', 'jpeg', 'png', 'gif'];
-  var imageChooser = document.querySelector('.img-upload__input');
-  var uploadPreview = document.querySelector('.img-upload__preview');
-  var imgPreview = uploadPreview.querySelector('img');
+  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+  var uploadFile = window.uploadFile;
+  var imgUploadPreviewLoad = document.querySelector('.img-upload__preview img');
+  window.imgUploadPreviewLoad = imgUploadPreviewLoad;
+  imgUploadPreviewLoad.style.height = '600px';
+  imgUploadPreviewLoad.style.width = '600px';
 
-  imageChooser.addEventListener('change', function () {
-    var file = imageChooser.files[0];
+  uploadFile.addEventListener('change', function () {
+    var file = uploadFile.files[0];
     var fileName = file.name.toLowerCase();
 
     var matches = FILE_TYPES.some(function (it) {
@@ -18,10 +20,10 @@
       var reader = new FileReader();
 
       reader.addEventListener('load', function () {
-        imgPreview.src = reader.result;
+        imgUploadPreviewLoad.src = reader.result;
       });
-
-      reader.readAsDataURL(file);
     }
+
+    reader.readAsDataURL(file);
   });
 })();

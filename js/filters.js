@@ -4,13 +4,13 @@
   // Фильтр новых фото
 
   var filterNew = function (data) {
-    var countNewPhotos = 10;
+    var COUNT_NEW_PHOTOS = 10;
     var newPhotos = data.slice();
     var filteredPhotos = [];
 
     // Случайные фото
 
-    while (filteredPhotos.length < countNewPhotos) {
+    while (filteredPhotos.length < COUNT_NEW_PHOTOS) {
       var i = Math.floor(Math.random() * (newPhotos.length - 1));
       filteredPhotos.push(newPhotos[i]);
       newPhotos.splice(i, 1);

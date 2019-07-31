@@ -3,34 +3,18 @@
 (function () {
   var main = document.querySelector('main');
 
-  var upload = function (data, onSuccess) {
-    var xhr = new XMLHttpRequest();
-    var URL_POST = 'https://js.dump.academy/kekstagram';
-
-    xhr.responseType = 'json';
-
-    xhr.addEventListener('load', function () {
-      onSuccess(xhr.response);
-    });
-
-    xhr.addEventListener('error', function () {
-      onError();
-    });
-
-    xhr.open('POST', URL_POST);
-    xhr.send(data);
-  };
-
   var resetUpload = function () {
-    window.hashtags.value = '';
+    window.imgUploadPreviewLoad.src = '';
+    window.hashtagsInput.value = '';
     window.commentField.value = '';
     window.uploadFile.value = '';
   };
 
   var openWindow = function (dialogWindow) {
     var successWindow = document.querySelector('#' + dialogWindow).content.querySelector('.' + dialogWindow);
+    var message = successWindow.cloneNode(true);
 
-    main.appendChild(successWindow);
+    main.appendChild(message);
   };
 
   var closeWindow = function (dialogWindow) {
@@ -48,13 +32,11 @@
       dialog.remove();
     };
 
-
     var dialogRemove = function (evt) {
       if (!evt.target.closest('.' + dialogWindow + '__inner')) {
         dialogElementRemove();
       }
     };
-
 
     document.addEventListener('keydown', onEscPress);
 
@@ -78,10 +60,14 @@
     openWindow('error');
     closeWindow('error');
   };
+  window.onError = onError;
 
-  window.imageUploadForm.addEventListener('submit', function (evt) {
-    upload(new FormData(window.imageUploadForm), onSucces);
+  window.imgUploadForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
+    var submitResult = window.submitValidate();
+    if (!submitResult) {
+      var newFormData = new FormData(window.imgUploadForm);
+      window.upload(newFormData, onSucces);
+    }
   });
-
 })();
