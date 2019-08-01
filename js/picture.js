@@ -27,7 +27,6 @@
     pictures.appendChild(fragment);
   };
 
-
   // Фильтры
 
   var onLoadError = function (errorMessage) {
