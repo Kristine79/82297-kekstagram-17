@@ -124,7 +124,6 @@
     var stringLevelEffect = getEffectString(levelEffect);
 
     imgPreview.style.filter = stringLevelEffect;
-
     levelEffectValue.value = left;
   };
 

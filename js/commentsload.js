@@ -2,7 +2,6 @@
 
 (function () {
   var COMMENTS_COUNT = 5;
-
   var bigPicture = document.querySelector('.big-picture');
   var commentLoader = bigPicture.querySelector('.comments-loader');
   var commentIndex = 0;

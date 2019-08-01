@@ -114,6 +114,7 @@
   window.uploadFile.addEventListener('change', function () {
     openFormEdition();
     window.effects.resetFormEdition();
+    window.scale.resetScaleValue();
     effectsList.addEventListener('change', onEffectChange);
     zoomInButton.addEventListener('click', onPlusScale);
     zoomOutButton.addEventListener('click', onMinusScale);
