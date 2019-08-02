@@ -65,6 +65,7 @@
   window.imgUploadForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
     var submitResult = window.submitValidate();
+
     if (!submitResult) {
       var newFormData = new FormData(window.imgUploadForm);
       window.upload(newFormData, onSuccess);
