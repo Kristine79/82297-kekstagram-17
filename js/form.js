@@ -47,8 +47,7 @@
 
     var getSizeElement = function (elem) {
       var elemInfo = elem.getBoundingClientRect();
-      var sizeElem = elemInfo.width;
-      return sizeElem;
+      return elemInfo.width;
     };
 
     var sliderSizeElem = getSizeElement(sliderElem);

@@ -47,7 +47,7 @@
     });
   };
 
-  var onSucces = function () {
+  var onSuccess = function () {
     window.closePopup();
     resetUpload();
     openWindow('success');
@@ -67,7 +67,7 @@
     var submitResult = window.submitValidate();
     if (!submitResult) {
       var newFormData = new FormData(window.imgUploadForm);
-      window.upload(newFormData, onSucces);
+      window.upload(newFormData, onSuccess);
     }
   });
 })();

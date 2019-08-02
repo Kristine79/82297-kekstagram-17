@@ -24,11 +24,9 @@
   var filterComments = function (data) {
     var newPhotos = data.slice();
 
-    var commentsPhotos = newPhotos.sort(function (first, second) {
+    return newPhotos.sort(function (first, second) {
       return second.comments.length - first.comments.length;
     });
-
-    return commentsPhotos;
   };
 
   // Фильтр по популярности
